@@ -1,0 +1,15 @@
+.letter {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1em;
+  transition: color .3s;
+}
+
+.correct {
+  color: #fff;
+}
+
+.incorrect {
+  color: #bd001c;
+}
+
