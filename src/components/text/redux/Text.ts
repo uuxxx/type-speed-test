@@ -49,4 +49,21 @@ export class Text {
       this.currentLetter.pointerPos = 'before';
     }
   }
+
+  turnToNextAfterAddingIncorrectExtra() {
+    const currentWord = this.currentWord;
+    const {letters} = currentWord;
+    letters[currentWord.length - 2].pointerPos = 'none';
+    currentWord.currentLetterId++;
+  }
+
+  addExtraLetter(letterTypedByUser: string) {
+    const currentWord = this.currentWord;
+    currentWord.letters.push({
+      type: 'incorrectExtra',
+      value: letterTypedByUser,
+      pointerPos: 'after',
+    });
+    currentWord.length++;
+  }
 }

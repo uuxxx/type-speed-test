@@ -1,3 +1,5 @@
+@import './vars.scss';
+
 .letter {
   font-size: 30px;
   font-weight: 500;
@@ -10,6 +12,10 @@
 }
 
 .incorrect {
-  color: #bd001c;
+  color: $incorrect-color;
+}
+
+.incorrectExtra {
+  color: $incorrect-extra-color;
 }
 

@@ -62,10 +62,14 @@ const slice = createSlice({
       }
 
       if (text.isExtraLetterRequired()) {
-        // add extra letter
+        text.addExtraLetter(letterTypedByUser);
+        text.turnToNextAfterAddingIncorrectExtra();
       } else {
         if (text.isCorrectLetterTyped(letterTypedByUser)) {
           text.markCurrentLetterAsCorrect();
+          text.turnToNextLetter();
+        } else {
+          text.markCurrentLetterAsIncorrect();
           text.turnToNextLetter();
         }
       }

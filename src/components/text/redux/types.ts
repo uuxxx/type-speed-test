@@ -1,5 +1,5 @@
 export interface Letter {
-  type: 'default' | 'correct' | 'incorrect' | 'incorrect-extra';
+  type: 'default' | 'correct' | 'incorrect' | 'incorrectExtra';
   pointerPos: 'none' | 'before' | 'after';
   value: string;
 }
