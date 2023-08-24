@@ -1,7 +1,7 @@
 export interface Letter {
-  type: 'default' | 'correct' | 'incorrect';
+  type: 'default' | 'correct' | 'incorrect' | 'incorrect-extra';
+  pointerPos: 'none' | 'before' | 'after';
   value: string;
-  isCurrent: boolean;
 }
 
 export interface Word {
@@ -9,6 +9,8 @@ export interface Word {
   extraIncorrectLettersAdded: number;
   isCurrent: boolean;
   currentLetterId: number;
+  length: number;
+  type: 'default' | 'correct' | 'incorrect';
 }
 
 export interface InfoAboutText {

@@ -30,12 +30,15 @@ export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
 
 export function serialize(quote: string) {
   const res: Word[] = [];
-  const wordDefault = () => ({
-    letters: [],
-    extraIncorrectLettersAdded: 0,
-    currentLetterId: 0,
-    isCurrent: false,
-  });
+  const wordDefault = () =>
+    ({
+      letters: [],
+      extraIncorrectLettersAdded: 0,
+      currentLetterId: 0,
+      isCurrent: false,
+      type: 'default',
+      length: 0,
+    } as Word);
 
   let word: Word = wordDefault();
 
@@ -44,12 +47,17 @@ export function serialize(quote: string) {
       res.push(word);
       word = wordDefault();
     } else {
-      word.letters.push({type: 'default', isCurrent: false, value: letter});
+      word.length++;
+      word.letters.push({
+        type: 'default',
+        value: letter,
+        pointerPos: 'none',
+      });
     }
   }
 
   res.push(word);
-  res[0].letters[0].isCurrent = true;
+  res[0].letters[0].pointerPos = 'before';
   res[0].isCurrent = true;
   return res;
 }

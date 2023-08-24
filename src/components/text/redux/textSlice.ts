@@ -10,7 +10,8 @@ import {
   isSpace,
   serialize,
 } from './utils';
-import {InitialState, InfoAboutText, Word} from './types';
+import {InitialState} from './types';
+import {Text} from './Text';
 
 const initialState = {
   isLoading: false,
@@ -34,10 +35,9 @@ const slice = createSlice({
   name: 'text',
   initialState,
   reducers: {
-    onKeyDown(
-        {infoAboutText},
-        {payload: letterTypedByUser}: PayloadAction<string>,
-    ) {
+    onKeyDown(state, {payload: letterTypedByUser}: PayloadAction<string>) {
+      const text = new Text(state);
+
       if (isSpace(letterTypedByUser)) {
         return;
       }
@@ -59,6 +59,15 @@ const slice = createSlice({
         isFunctional(letterTypedByUser)
       ) {
         return;
+      }
+
+      if (text.isExtraLetterRequired()) {
+        // add extra letter
+      } else {
+        if (text.isCorrectLetterTyped(letterTypedByUser)) {
+          text.markCurrentLetterAsCorrect();
+          text.turnToNextLetter();
+        }
       }
     },
   },

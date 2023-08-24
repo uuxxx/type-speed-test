@@ -9,7 +9,6 @@ export function Text() {
 
   useEffect(() => {
     function handleUserType(e: KeyboardEvent) {
-      e.preventDefault();
       onKeyDown(e.key);
     }
 
