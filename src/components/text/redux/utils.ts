@@ -1,12 +1,4 @@
-import {
-  ALT,
-  BACKSPACE,
-  CAPSLOCK,
-  CTRL,
-  FunctionalKeysDict,
-  SHIFT,
-  TAB,
-} from '@/constants';
+import {ALT, BACKSPACE, CAPSLOCK, CTRL, SHIFT, TAB} from '@/constants';
 
 export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
     lang: string,
@@ -65,8 +57,8 @@ export function isSpace(letter: string) {
   return letter === ' ';
 }
 
-export function isFunctional(letter: string) {
-  return FunctionalKeysDict.has(letter);
+export function isSpecialKey(letter: string) {
+  return letter.length > 1;
 }
 
 export function isBackspace(letter: string) {

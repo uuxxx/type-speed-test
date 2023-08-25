@@ -10,7 +10,10 @@ export function Text() {
   useEffect(() => {
     function handleUserType(e: KeyboardEvent) {
       e.preventDefault();
-      onKeyDown(e.key);
+      onKeyDown({
+        letterTypedByUser: e.key,
+        ctrlKey: e.ctrlKey,
+      });
     }
 
     fetchQuotes('russian');

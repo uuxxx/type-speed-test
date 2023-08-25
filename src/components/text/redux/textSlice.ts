@@ -3,10 +3,7 @@ import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {
   getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage,
   isBackspace,
-  isCaps,
-  isFunctional,
-  isOtherModifierKey,
-  isShift,
+  isSpecialKey,
   isSpace,
   serialize,
 } from './utils';
@@ -34,7 +31,11 @@ const slice = createSlice({
   name: 'text',
   initialState,
   reducers: {
-    onKeyDown(state, {payload: letterTypedByUser}: PayloadAction<string>) {
+    onKeyDown(
+        state,
+        {payload}: PayloadAction<{letterTypedByUser: string; ctrlKey: boolean}>,
+    ) {
+      const {letterTypedByUser, ctrlKey} = payload;
       const text = new Text(state);
 
       if (isSpace(letterTypedByUser)) {
@@ -44,11 +45,20 @@ const slice = createSlice({
         return;
       }
 
-      if (isShift(letterTypedByUser)) {
-        return;
-      }
-
       if (isBackspace(letterTypedByUser)) {
+        if (ctrlKey) {
+          if (text.isCtrlBackSpaceDeleteAllowed()) {
+            text.clearWord();
+          }
+          return;
+        }
+
+        if (text.isRequiredTurnToPrevWord()) {
+          if (text.isAllowedTurnToPrevWord()) {
+            text.turnToPrevWord();
+          }
+          return;
+        }
         if (text.isPossibleToRemove()) {
           if (text.shouldRemoveExtra()) {
             text.removeExtraLetter();
@@ -60,14 +70,7 @@ const slice = createSlice({
         return;
       }
 
-      if (isCaps(letterTypedByUser)) {
-        return;
-      }
-
-      if (
-        isOtherModifierKey(letterTypedByUser) ||
-        isFunctional(letterTypedByUser)
-      ) {
+      if (isSpecialKey(letterTypedByUser)) {
         return;
       }
 

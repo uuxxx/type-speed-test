@@ -17,6 +17,11 @@ export class Text {
     return words[currentWordId];
   }
 
+  get prevWord() {
+    const {words, currentWordId} = this.infoAboutText;
+    return words[currentWordId - 1];
+  }
+
   isCorrectLetterTyped(letterTypedByUser: string) {
     return (
       this.currentWord.extraIncorrectLettersAdded === 0 &&
@@ -142,5 +147,72 @@ export class Text {
     this.currentWord.type = type;
     this.infoAboutText.currentWordId++;
     this.currentLetter.pointerPos = 'before';
+  }
+
+  isRequiredTurnToPrevWord() {
+    return this.currentWord.currentLetterId === 0;
+  }
+
+  isAllowedTurnToPrevWord() {
+    if (this.infoAboutText.currentWordId === 0) {
+      return false;
+    }
+
+    return this.prevWord.type === 'incorrect';
+  }
+
+  turnToPrevWord() {
+    this.currentLetter.pointerPos = 'none';
+    this.infoAboutText.currentWordId--;
+    const currentWord = this.currentWord;
+
+    currentWord.currentLetterId = currentWord.length;
+    currentWord.letters[currentWord.length - 1].pointerPos = 'after';
+  }
+
+  removeExtraLettersFromCurrentWord() {
+    while (this.currentWord.extraIncorrectLettersAdded) {
+      this.removeExtraLetter();
+    }
+  }
+
+  isCtrlBackSpaceDeleteAllowed() {
+    if (this.isAnyLetterInWordWasTyped()) {
+      return true;
+    }
+
+    return this.isTurnToPrevWordAfterPressingCtrlBackspaceRequired();
+  }
+
+  isTurnToPrevWordAfterPressingCtrlBackspaceRequired() {
+    if (this.infoAboutText.currentWordId > 0) {
+      if (
+        this.currentWord.currentLetterId === 0 &&
+        this.prevWord.type === 'incorrect'
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  clearWord() {
+    if (this.isTurnToPrevWordAfterPressingCtrlBackspaceRequired()) {
+      this.turnToPrevWord();
+      return;
+    }
+
+    const {letters} = this.currentWord;
+
+    this.removeExtraLettersFromCurrentWord();
+
+    for (const letter of letters) {
+      letter.pointerPos = 'none';
+      letter.type = 'default';
+    }
+
+    this.currentWord.currentLetterId = 0;
+    this.currentLetter.pointerPos = 'before';
+    this.currentWord.type = 'default';
   }
 }
