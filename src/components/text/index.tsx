@@ -1,6 +1,6 @@
-import {Word} from '../word';
 import {useEffect} from 'react';
 import {useActions, useAppSelector} from '@/redux/hooks';
+import {Word} from '../word';
 import styles from '@styles/text.module.scss';
 
 export function Text() {
@@ -9,6 +9,7 @@ export function Text() {
 
   useEffect(() => {
     function handleUserType(e: KeyboardEvent) {
+      e.preventDefault();
       onKeyDown(e.key);
     }
 

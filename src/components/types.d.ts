@@ -1,19 +1,26 @@
-export interface Letter {
-  type: 'default' | 'correct' | 'incorrect' | 'incorrectExtra';
+declare type WordType = 'default' | 'correct' | 'incorrect';
+declare type LetterType =
+  | 'default'
+  | 'correct'
+  | 'incorrect'
+  | 'incorrectExtra';
+
+declare interface Letter {
+  type: LetterType;
   pointerPos: 'none' | 'before' | 'after';
   value: string;
 }
 
-export interface Word {
+declare interface Word {
   letters: Letter[];
   extraIncorrectLettersAdded: number;
   isCurrent: boolean;
   currentLetterId: number;
   length: number;
-  type: 'default' | 'correct' | 'incorrect';
+  type: WordType;
 }
 
-export interface InfoAboutText {
+declare interface InfoAboutText {
   currentWordId: number;
   mistakesMade: number;
   words: Word[];
@@ -22,7 +29,7 @@ export interface InfoAboutText {
   language: string;
 }
 
-export interface InitialState {
+declare interface InitialState {
   isLoading: boolean;
   errorWhileFetchingQuotes: null | string;
   infoAboutText: InfoAboutText;

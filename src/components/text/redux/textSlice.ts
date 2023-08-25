@@ -10,7 +10,6 @@ import {
   isSpace,
   serialize,
 } from './utils';
-import {InitialState} from './types';
 import {Text} from './Text';
 
 const initialState = {
@@ -39,6 +38,9 @@ const slice = createSlice({
       const text = new Text(state);
 
       if (isSpace(letterTypedByUser)) {
+        if (text.isAnyLetterInWordWasTyped()) {
+          text.turnToNextWord();
+        }
         return;
       }
 
@@ -47,6 +49,14 @@ const slice = createSlice({
       }
 
       if (isBackspace(letterTypedByUser)) {
+        if (text.isPossibleToRemove()) {
+          if (text.shouldRemoveExtra()) {
+            text.removeExtraLetter();
+            text.turnToPrevLetterAfterRemovingExtraLetter();
+          } else {
+            text.turnToPrevLetter();
+          }
+        }
         return;
       }
 
@@ -62,6 +72,10 @@ const slice = createSlice({
       }
 
       if (text.isExtraLetterRequired()) {
+        text.incrementMistakeCounter();
+        if (text.isLimitOfExtraLettersExeeded()) {
+          return;
+        }
         text.addExtraLetter(letterTypedByUser);
         text.turnToNextAfterAddingIncorrectExtra();
       } else {
@@ -71,6 +85,7 @@ const slice = createSlice({
         } else {
           text.markCurrentLetterAsIncorrect();
           text.turnToNextLetter();
+          text.incrementMistakeCounter();
         }
       }
     },

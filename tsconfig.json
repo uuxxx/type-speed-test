@@ -23,7 +23,7 @@
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
       "@redux/*": ["src/redux/*"],
-      "@redux": ["src/redux"]
+      "@redux": ["src/redux"],
     },
 
     "strict": true,

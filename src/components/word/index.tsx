@@ -8,8 +8,12 @@ export function Word({id}: {id: number}) {
 
   const letters: JSX.Element[] = [];
   for (let i = 0; i < word.letters.length; i++) {
-    const {type, value} = word.letters[i];
-    letters.push(<Letter key={i} type={type} value={value} />);
+    const infoAboutLetter = word.letters[i];
+    letters.push(<Letter key={i} {...infoAboutLetter} />);
   }
-  return <span className={styles.word}>{letters}</span>;
+
+  const className = `${styles.word} ${
+    word.type === 'incorrect' ? styles.incorrect : ''
+  }`;
+  return <span className={className}>{letters}</span>;
 }

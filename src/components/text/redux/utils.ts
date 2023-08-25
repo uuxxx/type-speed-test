@@ -7,7 +7,6 @@ import {
   SHIFT,
   TAB,
 } from '@/constants';
-import {Word} from './types';
 
 export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
     lang: string,
