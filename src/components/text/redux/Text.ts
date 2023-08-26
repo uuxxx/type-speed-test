@@ -3,8 +3,8 @@ const LIMIT_OF_INCORRECT_EXTRA_LETTERS = 6;
 export class Text {
   private infoAboutText: InfoAboutText;
 
-  constructor(state: InitialState) {
-    this.infoAboutText = state.infoAboutText;
+  constructor(private state: InitialState) {
+    this.infoAboutText = this.state.infoAboutText;
   }
 
   get currentLetter() {
@@ -118,7 +118,7 @@ export class Text {
     return this.currentWord.currentLetterId > 0;
   }
 
-  isWordTypedCorrectly() {
+  isCurrentWordTypedCorrectly() {
     const currentWord = this.currentWord;
     const {letters, extraIncorrectLettersAdded} = currentWord;
     if (extraIncorrectLettersAdded > 0) {
@@ -134,7 +134,7 @@ export class Text {
   }
 
   turnToNextWord() {
-    const type: WordType = this.isWordTypedCorrectly() ?
+    const type: WordType = this.isCurrentWordTypedCorrectly() ?
       'correct' :
       'incorrect';
 
@@ -214,5 +214,48 @@ export class Text {
     this.currentWord.currentLetterId = 0;
     this.currentLetter.pointerPos = 'before';
     this.currentWord.type = 'default';
+  }
+
+  markPrevWordAsTouched() {
+    this.prevWord.wasTouched = true;
+  }
+
+  shouldIncrementTypedWordsCounter() {
+    return !this.currentWord.wasTouched;
+  }
+
+  incrementTypedWordsCounter() {
+    this.infoAboutText.wordsTyped++;
+  }
+
+  isAllWordsBesidesLastWasTyped() {
+    const {length, wordsTyped} = this.infoAboutText;
+    return wordsTyped === length;
+  }
+
+  isCurrentWordLast() {
+    const {length, currentWordId} = this.infoAboutText;
+    return currentWordId === length - 1;
+  }
+
+  isCurrentLetterLast() {
+    const {length, currentLetterId} = this.currentWord;
+    return length === currentLetterId;
+  }
+
+  handlePressingSpaceOnLastWord() {
+    this.currentLetter.pointerPos = 'none';
+    this.currentWord.currentLetterId = this.currentWord.length - 1;
+    this.currentLetter.pointerPos = 'after';
+    this.currentWord.type = 'incorrect';
+    this.state.isTypingFinished = true;
+  }
+
+  handleCorrectlyTypedLastLetterInText() {
+    this.incrementTypedWordsCounter();
+    if (!this.isCurrentWordTypedCorrectly()) {
+      this.currentWord.type = 'incorrect';
+    }
+    this.state.isTypingFinished = true;
   }
 }

@@ -4,15 +4,15 @@
   font-size: 30px;
   font-weight: 500;
   line-height: 1em;
-  transition: color .3s;
   position: relative;
+  transition: color .3s;
 
   &:before {
     content: '';
     position: absolute;
     width: 2px;
     background: gray;
-    transition: opacity .2s;
+    transition: opacity .1s;
   }
 }
 

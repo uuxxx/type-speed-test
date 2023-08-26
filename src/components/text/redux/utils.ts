@@ -26,9 +26,9 @@ export function serialize(quote: string) {
       letters: [],
       extraIncorrectLettersAdded: 0,
       currentLetterId: 0,
-      isCurrent: false,
       type: 'default',
       length: 0,
+      wasTouched: false,
     } as Word);
 
   let word: Word = wordDefault();
@@ -49,7 +49,6 @@ export function serialize(quote: string) {
 
   res.push(word);
   res[0].letters[0].pointerPos = 'before';
-  res[0].isCurrent = true;
   return res;
 }
 

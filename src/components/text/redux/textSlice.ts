@@ -12,6 +12,8 @@ import {Text} from './Text';
 const initialState = {
   isLoading: false,
   errorWhileFetchingQuotes: null,
+  isTypingFinished: false,
+
   infoAboutText: {
     currentWordId: 0,
     mistakesMade: 0,
@@ -19,6 +21,7 @@ const initialState = {
     length: 0,
     source: '',
     language: '',
+    wordsTyped: 0,
   },
 } as InitialState;
 
@@ -35,12 +38,26 @@ const slice = createSlice({
         state,
         {payload}: PayloadAction<{letterTypedByUser: string; ctrlKey: boolean}>,
     ) {
+      if (state.isTypingFinished) {
+        return;
+      }
+
       const {letterTypedByUser, ctrlKey} = payload;
       const text = new Text(state);
 
       if (isSpace(letterTypedByUser)) {
         if (text.isAnyLetterInWordWasTyped()) {
+          if (text.shouldIncrementTypedWordsCounter()) {
+            text.incrementTypedWordsCounter();
+          }
+
+          if (text.isCurrentWordLast()) {
+            text.handlePressingSpaceOnLastWord();
+            return;
+          }
+
           text.turnToNextWord();
+          text.markPrevWordAsTouched();
         }
         return;
       }
@@ -85,6 +102,9 @@ const slice = createSlice({
         if (text.isCorrectLetterTyped(letterTypedByUser)) {
           text.markCurrentLetterAsCorrect();
           text.turnToNextLetter();
+          if (text.isCurrentWordLast() && text.isCurrentLetterLast()) {
+            text.handleCorrectlyTypedLastLetterInText();
+          }
         } else {
           text.markCurrentLetterAsIncorrect();
           text.turnToNextLetter();
@@ -103,9 +123,10 @@ const slice = createSlice({
             amountOfQuotes,
         );
 
-      const {text, length, source} = quotes[indexOfSuitableQuote];
-      infoAboutText.words = serialize(text);
-      infoAboutText.length = length;
+      const {text, source} = quotes[indexOfSuitableQuote];
+      const words = serialize(text);
+      infoAboutText.words = words;
+      infoAboutText.length = words.length;
       infoAboutText.source = source;
       state.isLoading = false;
       infoAboutText.language = language;

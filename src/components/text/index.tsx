@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useActions, useAppSelector} from '@/redux/hooks';
 import {Word} from '../word';
 import styles from '@styles/text.module.scss';
+import {TypedWordsCounter} from '../typedWordsCounter';
 
 export function Text() {
   const {fetchQuotes, onKeyDown} = useActions();
@@ -23,6 +24,7 @@ export function Text() {
 
   return (
     <div className={styles.textContainer}>
+      <TypedWordsCounter />
       {words.map((_, i) => (
         <Word id={i} key={i} />
       ))}

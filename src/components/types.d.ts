@@ -14,10 +14,10 @@ declare interface Letter {
 declare interface Word {
   letters: Letter[];
   extraIncorrectLettersAdded: number;
-  isCurrent: boolean;
   currentLetterId: number;
   length: number;
   type: WordType;
+  wasTouched: boolean;
 }
 
 declare interface InfoAboutText {
@@ -27,10 +27,12 @@ declare interface InfoAboutText {
   length: number;
   source: string;
   language: string;
+  wordsTyped: number;
 }
 
 declare interface InitialState {
   isLoading: boolean;
   errorWhileFetchingQuotes: null | string;
   infoAboutText: InfoAboutText;
+  isTypingFinished: boolean;
 }
