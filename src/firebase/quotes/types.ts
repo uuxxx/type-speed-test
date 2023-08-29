@@ -8,7 +8,6 @@ interface Quote {
 export interface Quotes {
   language: string;
   quotes: Quote[];
-  amountOfQuotes: number;
 }
 
 export type AvailableLangs = 'russian' | 'english';

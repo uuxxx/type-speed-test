@@ -115,12 +115,12 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuotes.fulfilled, (state, {payload}) => {
-      const {amountOfQuotes, quotes, language} = payload;
+      const {quotes, language} = payload;
       const {infoAboutText} = state;
       const indexOfSuitableQuote =
         getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
             language,
-            amountOfQuotes,
+            quotes.length,
         );
 
       const {text, source} = quotes[indexOfSuitableQuote];

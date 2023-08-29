@@ -4,5 +4,17 @@
   align-content: flex-start;
   column-gap: 10px;
   user-select: none;
+  max-height: 165px;
+  height: fit-content;
+  overflow-y: scroll;
+  padding: 5px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.wrapper {
+  
 }
 
