@@ -9,5 +9,3 @@ export interface Quotes {
   language: string;
   quotes: Quote[];
 }
-
-export type AvailableLangs = 'russian' | 'english';

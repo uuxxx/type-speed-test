@@ -1,7 +1,7 @@
 import app from '../config';
 import {getDownloadURL, getStorage, ref} from 'firebase/storage';
 import localforage from 'localforage';
-import {Quotes, AvailableLangs} from './types';
+import {Quotes} from './types';
 
 const storage = getStorage(app, 'gs://type-speed-test-v2.appspot.com/');
 

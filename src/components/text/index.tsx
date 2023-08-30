@@ -3,12 +3,21 @@ import {useActions, useAppSelector} from '@/redux/hooks';
 import {Word} from '../word';
 import {TypedWordsCounter} from '../typedWordsCounter';
 import styles from '@styles/text.module.scss';
+import {RestartButton} from '../restartButton';
 
-export function Text() {
-  const {fetchQuotes, onKeyDown} = useActions();
-  const {words, currentWordId} = useAppSelector(
-      (state) => state.text.infoAboutText,
+interface TextProps {
+  lang: AvailableLangs;
+}
+
+export function Text({lang}: TextProps) {
+  const {fetchQuotes, onKeyDown, incrementTimerBy1Sec} = useActions();
+  const words = useAppSelector((state) => state.text.infoAboutText.words);
+  const currentWordId = useAppSelector(
+      (state) => state.text.infoAboutText.currentWordId,
   );
+  const isTypingStarted = useAppSelector((state) => state.text.isTypingStarted);
+  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
+
   const textContainerRef = useRef<HTMLDivElement>(null);
   const activeWordRef = useRef<HTMLSpanElement>(null);
 
@@ -21,7 +30,7 @@ export function Text() {
       });
     }
 
-    fetchQuotes('russian');
+    fetchQuotes(lang);
 
     function disableScroll(e: Event) {
       e.preventDefault();
@@ -44,6 +53,20 @@ export function Text() {
     activeWordRef.current.scrollIntoView({block: 'center', behavior: 'smooth'});
   }, [currentWordId]);
 
+  useEffect(() => {
+    if (!isTypingStarted) {
+      return;
+    }
+
+    let id: NodeJS.Timeout;
+
+    if (!isTypingFinished) {
+      id = setInterval(incrementTimerBy1Sec, 1000);
+    }
+
+    return () => clearInterval(id);
+  }, [isTypingStarted, isTypingFinished]);
+
   return (
     <div className={styles.wrapper}>
       <TypedWordsCounter />
@@ -58,6 +81,7 @@ export function Text() {
           );
         })}
       </div>
+      <RestartButton lang={lang} />
     </div>
   );
 }

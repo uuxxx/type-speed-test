@@ -13,8 +13,10 @@ const initialState = {
   isLoading: false,
   errorWhileFetchingQuotes: null,
   isTypingFinished: false,
+  isTypingStarted: false,
 
   infoAboutText: {
+    timeSinceStartedTyping: 0,
     currentWordId: 0,
     mistakesMade: 0,
     words: [],
@@ -34,6 +36,12 @@ const slice = createSlice({
   name: 'text',
   initialState,
   reducers: {
+    reset() {
+      return initialState;
+    },
+    incrementTimerBy1Sec(state) {
+      state.infoAboutText.timeSinceStartedTyping++;
+    },
     onKeyDown(
         state,
         {payload}: PayloadAction<{letterTypedByUser: string; ctrlKey: boolean}>,
@@ -89,6 +97,10 @@ const slice = createSlice({
 
       if (isSpecialKey(letterTypedByUser)) {
         return;
+      }
+
+      if (!state.isTypingStarted) {
+        state.isTypingStarted = true;
       }
 
       if (text.isExtraLetterRequired()) {

@@ -6,7 +6,7 @@ export function App() {
   useTheme();
   return (
     <div className={st.wrapper}>
-      <Text />
+      <Text lang="english" />
     </div>
   );
 }

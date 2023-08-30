@@ -28,6 +28,7 @@ declare interface InfoAboutText {
   source: string;
   language: string;
   wordsTyped: number;
+  timeSinceStartedTyping: number;
 }
 
 declare interface InitialState {
@@ -35,4 +36,5 @@ declare interface InitialState {
   errorWhileFetchingQuotes: null | string;
   infoAboutText: InfoAboutText;
   isTypingFinished: boolean;
+  isTypingStarted: boolean;
 }
