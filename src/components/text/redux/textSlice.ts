@@ -16,7 +16,7 @@ const initialState = {
   isTypingStarted: false,
 
   infoAboutText: {
-    timeSinceStartedTyping: 0,
+    secondsSinceStartedTyping: 0,
     currentWordId: 0,
     mistakesMade: 0,
     words: [],
@@ -40,7 +40,7 @@ const slice = createSlice({
       return initialState;
     },
     incrementTimerBy1Sec(state) {
-      state.infoAboutText.timeSinceStartedTyping++;
+      state.infoAboutText.secondsSinceStartedTyping++;
     },
     onKeyDown(
         state,
@@ -149,8 +149,8 @@ const slice = createSlice({
     });
 
     builder.addCase(fetchQuotes.rejected, (state, {error}) => {
-      state.errorWhileFetchingQuotes = error.name || 'Something went wrong';
       state.isLoading = false;
+      state.errorWhileFetchingQuotes = error.name || 'Something went wrong';
     });
   },
 });

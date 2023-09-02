@@ -1,3 +1,11 @@
+import {SelectLangModal} from '@/modals/selectLangModal';
+import {Text} from '@/components/text';
+
 export function Game() {
-  return;
+  return (
+    <>
+      <SelectLangModal />
+      <Text lang="russian" />
+    </>
+  );
 }

@@ -4,4 +4,9 @@
   background: transparent;
   align-self: center;
   color: $dark-theme-main-color;
+  transition: color 0.1;
+
+  &:hover {
+    color: #000;
+  }
 }

@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import textReducer from '@components/text/redux/textSlice';
-import themeReducer from './theme_slice';
+import modalsReducer from '@modals/modalsSlice';
 
 const store = configureStore({
   reducer: {
-    theme: themeReducer,
     text: textReducer,
+    modals: modalsReducer,
   },
 });
 

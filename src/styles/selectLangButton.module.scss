@@ -1,0 +1,13 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.1s;
+  font-size: 20px;
+
+  &:hover {
+    color: #000;
+  }
+}

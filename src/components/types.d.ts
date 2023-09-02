@@ -28,7 +28,7 @@ declare interface InfoAboutText {
   source: string;
   language: string;
   wordsTyped: number;
-  timeSinceStartedTyping: number;
+  secondsSinceStartedTyping: number;
 }
 
 declare interface InitialState {

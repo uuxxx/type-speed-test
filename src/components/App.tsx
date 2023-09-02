@@ -1,12 +1,18 @@
-import {Text} from '@components/text';
-import st from '@styles/app.module.scss';
-import {useTheme} from '@/hooks';
+import {Game} from '@/pages/Game';
+import {useAppSelector} from '@/redux/hooks';
+import styles from '@styles/app.module.scss';
 
 export function App() {
-  useTheme();
+  const isAnyModalOpened = useAppSelector(
+      (state) => state.modals.isAnyModalOpened,
+  );
   return (
-    <div className={st.wrapper}>
-      <Text lang="english" />
+    <div
+      className={`${styles.wrapper} ${
+        isAnyModalOpened ? styles.modalOpened : ''
+      }`}
+    >
+      <Game />
     </div>
   );
 }

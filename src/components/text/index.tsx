@@ -1,9 +1,11 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useCallback} from 'react';
 import {useActions, useAppSelector} from '@/redux/hooks';
 import {Word} from '../word';
 import {TypedWordsCounter} from '../typedWordsCounter';
-import styles from '@styles/text.module.scss';
 import {RestartButton} from '../restartButton';
+import {Spinner} from '../spinner';
+import {SelectLangButton} from '../selectLangButton';
+import styles from '@styles/text.module.scss';
 
 interface TextProps {
   lang: AvailableLangs;
@@ -11,40 +13,40 @@ interface TextProps {
 
 export function Text({lang}: TextProps) {
   const {fetchQuotes, onKeyDown, incrementTimerBy1Sec} = useActions();
-  const words = useAppSelector((state) => state.text.infoAboutText.words);
+  const words = useAppSelector(state => state.text.infoAboutText.words);
   const currentWordId = useAppSelector(
-      (state) => state.text.infoAboutText.currentWordId,
+    state => state.text.infoAboutText.currentWordId,
   );
-  const isTypingStarted = useAppSelector((state) => state.text.isTypingStarted);
-  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
+  const isTypingStarted = useAppSelector(state => state.text.isTypingStarted);
+  const isTypingFinished = useAppSelector(state => state.text.isTypingFinished);
+  const isLoading = useAppSelector(state => state.text.isLoading);
+  const error = useAppSelector(state => state.text.errorWhileFetchingQuotes);
+  const isAnyModalOpened = useAppSelector(
+    state => state.modals.isAnyModalOpened,
+  );
 
   const textContainerRef = useRef<HTMLDivElement>(null);
   const activeWordRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
-    function handleUserType(e: KeyboardEvent) {
-      e.preventDefault();
-      onKeyDown({
-        letterTypedByUser: e.key,
-        ctrlKey: e.ctrlKey,
-      });
-    }
-
-    fetchQuotes(lang);
-
-    function disableScroll(e: Event) {
-      e.preventDefault();
-    }
-
-    const textContainer = textContainerRef.current!;
-
-    document.addEventListener('keydown', handleUserType);
-    textContainer.addEventListener('wheel', disableScroll);
-    return () => {
-      document.removeEventListener('keydown', handleUserType);
-      textContainer.removeEventListener('wheel', disableScroll);
-    };
+  const handleUserType = useCallback(function (e: KeyboardEvent) {
+    e.preventDefault();
+    onKeyDown({
+      letterTypedByUser: e.key,
+      ctrlKey: e.ctrlKey,
+    });
   }, []);
+
+  useEffect(() => {
+    fetchQuotes('english');
+  }, []);
+
+  useEffect(() => {
+    if (!isAnyModalOpened) {
+      document?.addEventListener('keydown', handleUserType);
+    }
+
+    return () => document?.removeEventListener('keydown', handleUserType);
+  }, [isAnyModalOpened]);
 
   useEffect(() => {
     if (!textContainerRef.current || !activeWordRef.current) {
@@ -67,8 +69,26 @@ export function Text({lang}: TextProps) {
     return () => clearInterval(id);
   }, [isTypingStarted, isTypingFinished]);
 
+  if (error) {
+    return (
+      <div className={styles.wrapper}>
+        <div>{error}</div>
+        <RestartButton lang={lang} />
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className={styles.wrapper}>
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
+      <SelectLangButton />
       <TypedWordsCounter />
       <div ref={textContainerRef} className={styles.textContainer}>
         {words.map((_, i) => {
