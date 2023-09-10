@@ -1,5 +1,6 @@
-import {Game} from '@/pages/Game';
 import {useAppSelector} from '@/redux/hooks';
+import {RouterProvider} from 'react-router-dom';
+import {router} from './router';
 import styles from '@styles/app.module.scss';
 
 export function App() {
@@ -12,7 +13,7 @@ export function App() {
         isAnyModalOpened ? styles.modalOpened : ''
       }`}
     >
-      <Game />
+      <RouterProvider router={router} />
     </div>
   );
 }

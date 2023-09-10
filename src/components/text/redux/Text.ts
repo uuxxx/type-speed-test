@@ -62,8 +62,12 @@ export class Text {
     currentWord.currentLetterId++;
   }
 
-  incrementMistakeCounter() {
-    this.infoAboutText.mistakesMade++;
+  incrementTotalKeysPressed() {
+    this.state.totalKeysPressed++;
+  }
+
+  incrementCorrectKeysPressed() {
+    this.state.correctKeysPressed++;
   }
 
   isLimitOfExtraLettersExeeded() {

@@ -1,79 +1,71 @@
 import {useEffect, useRef, useCallback} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useActions, useAppSelector} from '@/redux/hooks';
-import {Word} from '../word';
 import {TypedWordsCounter} from '../typedWordsCounter';
-import {RestartButton} from '../restartButton';
 import {Spinner} from '../spinner';
 import {SelectLangButton} from '../selectLangButton';
+import {Words} from '../words';
+import {
+  getLastSelectedLangFromLocalStorage,
+  setSelectedLangToLocalStorage,
+} from './redux/utils';
+import {Menu} from '../menu';
+import {Timer} from '../timer';
+import {Button} from '../button';
 import styles from '@styles/text.module.scss';
 
-interface TextProps {
-  lang: AvailableLangs;
-}
+export function Text() {
+  const {fetchQuotes, resetTypingProgress} = useActions();
 
-export function Text({lang}: TextProps) {
-  const {fetchQuotes, onKeyDown, incrementTimerBy1Sec} = useActions();
-  const words = useAppSelector(state => state.text.infoAboutText.words);
-  const currentWordId = useAppSelector(
-    state => state.text.infoAboutText.currentWordId,
-  );
-  const isTypingStarted = useAppSelector(state => state.text.isTypingStarted);
-  const isTypingFinished = useAppSelector(state => state.text.isTypingFinished);
-  const isLoading = useAppSelector(state => state.text.isLoading);
-  const error = useAppSelector(state => state.text.errorWhileFetchingQuotes);
-  const isAnyModalOpened = useAppSelector(
-    state => state.modals.isAnyModalOpened,
-  );
+  const isLoading = useAppSelector((state) => state.text.isLoading);
+  const error = useAppSelector((state) => state.text.errorWhileFetchingQuotes);
+  const mode = useAppSelector((state) => state.text.mode);
+  const language = useAppSelector((state) => state.text.infoAboutText.language);
+  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
+
+  const navigate = useNavigate();
 
   const textContainerRef = useRef<HTMLDivElement>(null);
-  const activeWordRef = useRef<HTMLSpanElement>(null);
 
-  const handleUserType = useCallback(function (e: KeyboardEvent) {
-    e.preventDefault();
-    onKeyDown({
-      letterTypedByUser: e.key,
-      ctrlKey: e.ctrlKey,
-    });
+  const prevDefault = useCallback((e: Event) => e.preventDefault(), []);
+
+  useEffect(() => {
+    const lastSelectedLang = getLastSelectedLangFromLocalStorage();
+    fetchQuotes(lastSelectedLang);
   }, []);
 
   useEffect(() => {
-    fetchQuotes('english');
-  }, []);
+    if (isTypingFinished) {
+      navigate('/analytics');
+    }
+  }, [isTypingFinished]);
 
   useEffect(() => {
-    if (!isAnyModalOpened) {
-      document?.addEventListener('keydown', handleUserType);
-    }
-
-    return () => document?.removeEventListener('keydown', handleUserType);
-  }, [isAnyModalOpened]);
+    setSelectedLangToLocalStorage(language);
+  }, [language]);
 
   useEffect(() => {
-    if (!textContainerRef.current || !activeWordRef.current) {
-      return;
-    }
-    activeWordRef.current.scrollIntoView({block: 'center', behavior: 'smooth'});
-  }, [currentWordId]);
+    const textContainer = textContainerRef.current;
+    textContainer?.addEventListener('wheel', prevDefault, {passive: false});
+    textContainer?.addEventListener('touchmove', prevDefault, {passive: false});
+    return () => {
+      textContainer?.removeEventListener('wheel', prevDefault);
+      textContainer?.removeEventListener('touchmove', prevDefault);
+    };
+  });
 
-  useEffect(() => {
-    if (!isTypingStarted) {
-      return;
-    }
-
-    let id: NodeJS.Timeout;
-
-    if (!isTypingFinished) {
-      id = setInterval(incrementTimerBy1Sec, 1000);
-    }
-
-    return () => clearInterval(id);
-  }, [isTypingStarted, isTypingFinished]);
+  function replayClickHandler() {
+    resetTypingProgress();
+    fetchQuotes(language);
+  }
 
   if (error) {
     return (
       <div className={styles.wrapper}>
         <div>{error}</div>
-        <RestartButton lang={lang} />
+        <Button onClick={replayClickHandler}>
+          <span className="material-symbols-outlined">replay</span>
+        </Button>
       </div>
     );
   }
@@ -88,20 +80,15 @@ export function Text({lang}: TextProps) {
 
   return (
     <div className={styles.wrapper}>
+      <Menu />
       <SelectLangButton />
-      <TypedWordsCounter />
+      {mode === 'time' ? <Timer /> : <TypedWordsCounter />}
       <div ref={textContainerRef} className={styles.textContainer}>
-        {words.map((_, i) => {
-          return (
-            <Word
-              id={i}
-              key={i}
-              ref={currentWordId === i ? activeWordRef : undefined}
-            />
-          );
-        })}
+        <Words />
       </div>
-      <RestartButton lang={lang} />
+      <Button onClick={replayClickHandler}>
+        <span className="material-symbols-outlined">replay</span>
+      </Button>
     </div>
   );
 }

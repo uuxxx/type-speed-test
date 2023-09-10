@@ -1,10 +1,19 @@
-import {ALT, BACKSPACE, CAPSLOCK, CTRL, SHIFT, TAB} from '@/constants';
+import {
+  ALT,
+  BACKSPACE,
+  CAPSLOCK,
+  CTRL,
+  LAST_SELECTED_LANG,
+  SHIFT,
+  TAB,
+  QUOTES,
+} from '@/constants';
 
 export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
     lang: string,
     amountOfQutes: number,
 ): number {
-  let storage = JSON.parse(localStorage.getItem('quotes')!);
+  let storage = JSON.parse(localStorage.getItem(QUOTES)!);
   if (storage) {
     if (lang in storage && storage[lang] < amountOfQutes) {
       storage[lang]++;
@@ -15,8 +24,23 @@ export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(
     storage = {[lang]: 0};
   }
 
-  localStorage.setItem('quotes', JSON.stringify(storage));
+  localStorage.setItem(QUOTES, JSON.stringify(storage));
   return storage[lang];
+}
+
+export function getLastSelectedLangFromLocalStorage(): string {
+  const lastSelectedLang = localStorage.getItem(LAST_SELECTED_LANG);
+
+  if (lastSelectedLang) {
+    return lastSelectedLang;
+  }
+
+  localStorage.setItem(LAST_SELECTED_LANG, 'english');
+  return 'english';
+}
+
+export function setSelectedLangToLocalStorage(lang: string) {
+  localStorage.setItem(LAST_SELECTED_LANG, lang);
 }
 
 export function serialize(quote: string) {

@@ -1,0 +1,23 @@
+@import './vars.scss';
+
+.button {
+  color: $dark-theme-main-color;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.highlighted {
+  background: $dark-theme-main-color;
+  color: $dark-theme-bg-color;
+}

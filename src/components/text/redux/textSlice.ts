@@ -1,4 +1,4 @@
-import {memoizedDownloadQuotes} from '@/firebase/quotes/download_quotes';
+import {memoizedDownloadQuotes} from '@/firebase/quotes/fetch_quotes';
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {
   getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage,
@@ -14,11 +14,14 @@ const initialState = {
   errorWhileFetchingQuotes: null,
   isTypingFinished: false,
   isTypingStarted: false,
+  correctKeysPressed: 0,
+  totalKeysPressed: 0,
+  afkDetected: false,
+  mode: 'words',
 
   infoAboutText: {
     secondsSinceStartedTyping: 0,
     currentWordId: 0,
-    mistakesMade: 0,
     words: [],
     length: 0,
     source: '',
@@ -36,8 +39,26 @@ const slice = createSlice({
   name: 'text',
   initialState,
   reducers: {
-    reset() {
-      return initialState;
+    finishTyping(state) {
+      state.isTypingFinished = true;
+    },
+    switchMode(state, {payload}: PayloadAction<Mode>) {
+      state.mode = payload;
+    },
+    setAfkDetected(state) {
+      if (state.isTypingStarted && !state.isTypingFinished) {
+        state.afkDetected = true;
+      }
+    },
+    resetTypingProgress(state) {
+      state.isTypingStarted = false;
+      state.isTypingFinished = false;
+      state.correctKeysPressed = 0;
+      state.afkDetected = false;
+      const {infoAboutText} = state;
+      infoAboutText.wordsTyped = 0;
+      infoAboutText.currentWordId = 0;
+      infoAboutText.secondsSinceStartedTyping = 0;
     },
     incrementTimerBy1Sec(state) {
       state.infoAboutText.secondsSinceStartedTyping++;
@@ -54,7 +75,11 @@ const slice = createSlice({
       const text = new Text(state);
 
       if (isSpace(letterTypedByUser)) {
+        text.incrementTotalKeysPressed();
         if (text.isAnyLetterInWordWasTyped()) {
+          if (text.isCurrentWordTypedCorrectly()) {
+            text.incrementCorrectKeysPressed();
+          }
           if (text.shouldIncrementTypedWordsCounter()) {
             text.incrementTypedWordsCounter();
           }
@@ -71,6 +96,7 @@ const slice = createSlice({
       }
 
       if (isBackspace(letterTypedByUser)) {
+        text.incrementTotalKeysPressed();
         if (ctrlKey) {
           if (text.isCtrlBackSpaceDeleteAllowed()) {
             text.clearWord();
@@ -103,8 +129,9 @@ const slice = createSlice({
         state.isTypingStarted = true;
       }
 
+      text.incrementTotalKeysPressed();
+
       if (text.isExtraLetterRequired()) {
-        text.incrementMistakeCounter();
         if (text.isLimitOfExtraLettersExeeded()) {
           return;
         }
@@ -112,6 +139,7 @@ const slice = createSlice({
         text.turnToNextAfterAddingIncorrectExtra();
       } else {
         if (text.isCorrectLetterTyped(letterTypedByUser)) {
+          text.incrementCorrectKeysPressed();
           text.markCurrentLetterAsCorrect();
           text.turnToNextLetter();
           if (text.isCurrentWordLast() && text.isCurrentLetterLast()) {
@@ -120,7 +148,6 @@ const slice = createSlice({
         } else {
           text.markCurrentLetterAsIncorrect();
           text.turnToNextLetter();
-          text.incrementMistakeCounter();
         }
       }
     },
@@ -146,6 +173,7 @@ const slice = createSlice({
 
     builder.addCase(fetchQuotes.pending, (state) => {
       state.isLoading = true;
+      state.errorWhileFetchingQuotes = null;
     });
 
     builder.addCase(fetchQuotes.rejected, (state, {error}) => {

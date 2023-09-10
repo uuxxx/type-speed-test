@@ -5,6 +5,8 @@ declare type LetterType =
   | 'incorrect'
   | 'incorrectExtra';
 
+declare type Mode = 'words' | 'time';
+
 declare interface Letter {
   type: LetterType;
   pointerPos: 'none' | 'before' | 'after';
@@ -22,7 +24,6 @@ declare interface Word {
 
 declare interface InfoAboutText {
   currentWordId: number;
-  mistakesMade: number;
   words: Word[];
   length: number;
   source: string;
@@ -37,4 +38,8 @@ declare interface InitialState {
   infoAboutText: InfoAboutText;
   isTypingFinished: boolean;
   isTypingStarted: boolean;
+  totalKeysPressed: number;
+  correctKeysPressed: number;
+  afkDetected: boolean;
+  mode: Mode;
 }

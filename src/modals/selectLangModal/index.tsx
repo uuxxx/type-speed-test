@@ -1,7 +1,7 @@
-import React from 'react';
+import {useState, useDeferredValue} from 'react';
 import {createPortal} from 'react-dom';
-import {useAppSelector} from '@/redux/hooks';
-import {useActions} from '@/redux/hooks';
+import {useAppSelector, useActions} from '@/redux/hooks';
+import {Suggestions} from '@/components/suggestions';
 import styles from '@styles/selectLangModal.module.scss';
 
 export function SelectLangModal() {
@@ -9,19 +9,10 @@ export function SelectLangModal() {
       (state) => state.modals.selectLangModal.isOpened,
   );
 
-  const {closeSelectLangModal, fetchQuotes, reset} = useActions();
+  const {closeSelectLangModal} = useActions();
 
-  async function handleSelectLang(
-      e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) {
-    const $el = e.target as Element;
-    if ($el.getAttribute('data-type') === 'suggestedLang') {
-      const lang = $el.getAttribute('data-value') as AvailableLangs;
-      reset();
-      fetchQuotes(lang);
-      closeSelectLangModal();
-    }
-  }
+  const [searchQuery, setSearchQuery] = useState('');
+  const defferedQuery = useDeferredValue(searchQuery);
 
   if (isSelectLangModalOpened) {
     return createPortal(
@@ -39,25 +30,12 @@ export function SelectLangModal() {
                 className={styles.searchInput}
                 type="text"
                 placeholder="Type to search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <div className={styles.separator}></div>
-            <div className={styles.suggestions} onClick={handleSelectLang}>
-              <div
-                data-type="suggestedLang"
-                data-value="english"
-                className={styles.suggestedLanguage}
-              >
-              english
-              </div>
-              <div
-                data-type="suggestedLang"
-                data-value="russian"
-                className={styles.suggestedLanguage}
-              >
-              russian
-              </div>
-            </div>
+            <Suggestions searchQuery={defferedQuery} />
           </div>
         </>,
       document.getElementById('popups')!,
