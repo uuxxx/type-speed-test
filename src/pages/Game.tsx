@@ -5,7 +5,7 @@ export function Game() {
   return (
     <>
       <SelectLangModal />
-      <Text />
+      <Text lang="russian" />
     </>
   );
 }
