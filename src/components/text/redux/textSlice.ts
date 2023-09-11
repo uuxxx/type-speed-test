@@ -55,6 +55,7 @@ const slice = createSlice({
       state.isTypingFinished = false;
       state.correctKeysPressed = 0;
       state.afkDetected = false;
+      state.totalKeysPressed = 0;
       const {infoAboutText} = state;
       infoAboutText.wordsTyped = 0;
       infoAboutText.currentWordId = 0;
