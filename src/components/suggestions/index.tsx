@@ -1,6 +1,11 @@
 import {useEffect, memo} from 'react';
 import {useAppSelector, useActions} from '@/redux/hooks';
 import {Spinner} from '../spinner';
+import {
+  selectAvailableLangs,
+  selectErrorLoadingListOfLangs,
+  selectIsListOfLangsLoading,
+} from '@/redux/selectors/modals/selectLangModals';
 import styles from '@styles/suggestions.module.scss';
 
 interface SuggestionsProps {
@@ -8,16 +13,10 @@ interface SuggestionsProps {
 }
 
 export const Suggestions = memo(({searchQuery}: SuggestionsProps) => {
-  const availableLangs = useAppSelector(
-      (state) => state.modals.selectLangModal.availableLangs,
-  );
+  const availableLangs = useAppSelector(selectAvailableLangs);
 
-  const isLoadind = useAppSelector(
-      (state) => state.modals.selectLangModal.isListLoading,
-  );
-  const error = useAppSelector(
-      (state) => state.modals.selectLangModal.errorWhileLoading,
-  );
+  const isLoadind = useAppSelector(selectIsListOfLangsLoading);
+  const error = useAppSelector(selectErrorLoadingListOfLangs);
 
   const {
     resetTypingProgress,

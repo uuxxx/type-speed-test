@@ -2,12 +2,11 @@ import {useState, useDeferredValue} from 'react';
 import {createPortal} from 'react-dom';
 import {useAppSelector, useActions} from '@/redux/hooks';
 import {Suggestions} from '@/components/suggestions';
+import {selectIsSelectLangModalOpened} from '@/redux/selectors/modals/selectLangModals';
 import styles from '@styles/selectLangModal.module.scss';
 
 export function SelectLangModal() {
-  const isSelectLangModalOpened = useAppSelector(
-      (state) => state.modals.selectLangModal.isOpened,
-  );
+  const isSelectLangModalOpened = useAppSelector(selectIsSelectLangModalOpened);
 
   const {closeSelectLangModal} = useActions();
 

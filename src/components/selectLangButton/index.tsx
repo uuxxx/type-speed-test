@@ -1,10 +1,11 @@
 import {useAppSelector, useActions} from '@/redux/hooks';
 import {Button} from '../button';
+import {selectTextLanguage} from '@/redux/selectors/text';
 import styles from '@styles/selectLangButton.module.scss';
 
 export function SelectLangButton() {
   const {openSelectLangModal} = useActions();
-  const language = useAppSelector((state) => state.text.infoAboutText.language);
+  const language = useAppSelector(selectTextLanguage);
 
   return (
     <Button className={styles.button} onClick={() => openSelectLangModal()}>

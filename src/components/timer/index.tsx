@@ -1,11 +1,12 @@
-import {useAppSelector, useActions} from '@/redux/hooks';
 import {useEffect} from 'react';
+import {useAppSelector, useActions} from '@/redux/hooks';
+import {selectTextSecondsSinceStartedTyping} from '@/redux/selectors/text';
 
 const SECONDS_TO_TYPE = 15;
 
 export function Timer() {
   const secondsSinceStartedTyping = useAppSelector(
-      (state) => state.text.infoAboutText.secondsSinceStartedTyping,
+      selectTextSecondsSinceStartedTyping,
   );
   const {finishTyping} = useActions();
 

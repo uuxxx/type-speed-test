@@ -5,11 +5,12 @@ import {
   getLastSelectedModeFromLocalStorage,
   setSelectedModeToLocalStorage,
 } from './utils';
+import {selectTextLanguage, selectTextMode} from '@/redux/selectors/text';
 import styles from '@styles/menu.module.scss';
 
 export function Menu() {
-  const currentMode = useAppSelector((state) => state.text.mode);
-  const language = useAppSelector((state) => state.text.infoAboutText.language);
+  const currentMode = useAppSelector(selectTextMode);
+  const language = useAppSelector(selectTextLanguage);
   const {switchMode, resetTypingProgress, fetchQuotes} = useActions();
 
   useEffect(() => {
