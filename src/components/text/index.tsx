@@ -26,6 +26,7 @@ export function Text() {
   const navigate = useNavigate();
 
   const textContainerRef = useRef<HTMLDivElement>(null);
+  const fakeInputRef = useRef<HTMLInputElement>(null);
 
   const prevDefault = useCallback((e: Event) => e.preventDefault(), []);
 
@@ -48,15 +49,21 @@ export function Text() {
     const textContainer = textContainerRef.current;
     textContainer?.addEventListener('wheel', prevDefault, {passive: false});
     textContainer?.addEventListener('touchmove', prevDefault, {passive: false});
+    textContainer?.addEventListener('click', focusFakeInput);
     return () => {
       textContainer?.removeEventListener('wheel', prevDefault);
       textContainer?.removeEventListener('touchmove', prevDefault);
+      textContainer?.removeEventListener('click', focusFakeInput);
     };
   });
 
   function replayClickHandler() {
     resetTypingProgress();
     fetchQuotes(language);
+  }
+
+  function focusFakeInput() {
+    fakeInputRef.current?.focus();
   }
 
   if (error) {
@@ -80,6 +87,7 @@ export function Text() {
 
   return (
     <div className={styles.wrapper}>
+      <input ref={fakeInputRef} className={styles.fakeInput} />
       <Menu />
       <SelectLangButton />
       {mode === 'time' ? <Timer /> : <TypedWordsCounter />}
