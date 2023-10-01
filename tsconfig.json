@@ -6,8 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    
-
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -15,16 +13,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@styles/*": ["src/styles/*"],
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"],
-      "@redux/*": ["src/redux/*"],
-      "@redux": ["src/redux"],
-      "@modals/*": ["src/modals/*"]
+      "@/*": ["src/*"]
     },
 
     "strict": true,
@@ -33,5 +24,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{"path": "./tsconfig.node.json"}]
 }

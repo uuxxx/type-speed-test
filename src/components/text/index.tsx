@@ -12,16 +12,23 @@ import {
 import {Menu} from '../menu';
 import {Timer} from '../timer';
 import {Button} from '../button';
-import styles from '@styles/text.module.scss';
+import {
+  selectTextErrorWhileFetchingQuotes,
+  selectTextIsLoading,
+  selectTextIsTypingFinished,
+  selectTextLanguage,
+  selectTextMode,
+} from '@/redux/selectors/text';
+import styles from '@/styles/text.module.scss';
 
 export function Text() {
   const {fetchQuotes, resetTypingProgress} = useActions();
 
-  const isLoading = useAppSelector((state) => state.text.isLoading);
-  const error = useAppSelector((state) => state.text.errorWhileFetchingQuotes);
-  const mode = useAppSelector((state) => state.text.mode);
-  const language = useAppSelector((state) => state.text.infoAboutText.language);
-  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
+  const isLoading = useAppSelector(selectTextIsLoading);
+  const error = useAppSelector(selectTextErrorWhileFetchingQuotes);
+  const mode = useAppSelector(selectTextMode);
+  const language = useAppSelector(selectTextLanguage);
+  const isTypingFinished = useAppSelector(selectTextIsTypingFinished);
 
   const navigate = useNavigate();
 

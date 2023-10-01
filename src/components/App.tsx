@@ -1,12 +1,11 @@
 import {useAppSelector} from '@/redux/hooks';
 import {RouterProvider} from 'react-router-dom';
 import {router} from './router';
-import styles from '@styles/app.module.scss';
+import {selectModalsIsAnyModalOpened} from '@/redux/selectors/modals/modals';
+import styles from '@/styles/app.module.scss';
 
 export function App() {
-  const isAnyModalOpened = useAppSelector(
-      (state) => state.modals.isAnyModalOpened,
-  );
+  const isAnyModalOpened = useAppSelector(selectModalsIsAnyModalOpened);
   return (
     <div
       className={`${styles.wrapper} ${

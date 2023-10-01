@@ -1,19 +1,22 @@
 import {useRef, useEffect} from 'react';
 import {useAppSelector, useActions} from '@/redux/hooks';
 import {Word} from '../word';
+import {selectModalsIsAnyModalOpened} from '@/redux/selectors/modals/modals';
+import {
+  selectTextCurrentWordId,
+  selectTextIsTypingFinished,
+  selectTextIsTypingStarted,
+  selectTextWords,
+} from '@/redux/selectors/text';
 
 export function Words() {
   const {incrementTimerBy1Sec, onKeyDown, setAfkDetected} = useActions();
-  const words = useAppSelector((state) => state.text.infoAboutText.words);
-  const currentWordId = useAppSelector(
-      (state) => state.text.infoAboutText.currentWordId,
-  );
+  const words = useAppSelector(selectTextWords);
+  const currentWordId = useAppSelector(selectTextCurrentWordId);
 
-  const isTypingStarted = useAppSelector((state) => state.text.isTypingStarted);
-  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
-  const isAnyModalOpened = useAppSelector(
-      (state) => state.modals.isAnyModalOpened,
-  );
+  const isTypingStarted = useAppSelector(selectTextIsTypingStarted);
+  const isTypingFinished = useAppSelector(selectTextIsTypingFinished);
+  const isAnyModalOpened = useAppSelector(selectModalsIsAnyModalOpened);
 
   const activeWordRef = useRef<HTMLSpanElement>(null);
 
@@ -28,7 +31,7 @@ export function Words() {
       ctrlKey: e.ctrlKey,
     });
 
-    intervalIdRef.current = setTimeout(setAfkDetected, 5000);
+    intervalIdRef.current = setTimeout(setAfkDetected, 5_000);
   }
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export function Words() {
     }
 
     return () => {
+      clearTimeout(intervalIdRef.current);
       document?.removeEventListener('keydown', handleUserType);
     };
   }, [isAnyModalOpened]);

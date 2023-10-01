@@ -1,14 +1,15 @@
 import {forwardRef} from 'react';
 import {useAppSelector} from '@/redux/hooks';
 import {Letter} from '../letter';
-import styles from '@styles/word.module.scss';
+import {selectTextWordById} from '@/redux/selectors/text';
+import styles from '@/styles/word.module.scss';
 
 interface WordProps {
   id: number;
 }
 
 export const Word = forwardRef<HTMLSpanElement, WordProps>(({id}, ref) => {
-  const word = useAppSelector((state) => state.text.infoAboutText.words[id]);
+  const word = useAppSelector((state) => selectTextWordById(state, id));
 
   const letters: JSX.Element[] = [];
   for (let i = 0; i < word.letters.length; i++) {
@@ -21,7 +22,12 @@ export const Word = forwardRef<HTMLSpanElement, WordProps>(({id}, ref) => {
   }`;
 
   return (
-    <span ref={ref || undefined} data-id={id} className={className}>
+    <span
+      ref={ref || undefined}
+      data-id={id}
+      data-testid="word"
+      className={className}
+    >
       {letters}
     </span>
   );

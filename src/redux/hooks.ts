@@ -4,8 +4,8 @@ import {
   fetchQuotes,
   actions as textActions,
 } from '@/components/text/redux/textSlice';
-import {actions as modalsActions} from '@modals/modalsSlice';
-import {fetchListOfQuotes} from '@modals/modalsSlice';
+import {actions as modalsActions} from '@/modals/modalsSlice';
+import {fetchListOfQuotes} from '@/modals/modalsSlice';
 import {RootState, AppDispatch} from '.';
 
 type DispatchFunc = () => AppDispatch;

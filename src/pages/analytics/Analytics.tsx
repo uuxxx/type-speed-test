@@ -3,24 +3,29 @@ import {useAppSelector, useActions} from '@/redux/hooks';
 import {StatsCalculator} from './StatsCalculator';
 import {Navigate, useNavigate} from 'react-router-dom';
 import {Button} from '@/components/button';
-import styles from '@styles/analytics.module.scss';
+import {
+  selectTextAfkDetected,
+  selectTextCorrectKeysPressed,
+  selectTextIsTypingFinished,
+  selectTextLanguage,
+  selectTextMode,
+  selectTextSecondsSinceStartedTyping,
+  selectTextTotalKeysPressed,
+  selectTextWords,
+  selectTextWordsTyped,
+} from '@/redux/selectors/text';
+import styles from '@/styles/analytics.module.scss';
 
 export function Analytics() {
-  const isTypingFinished = useAppSelector((state) => state.text.isTypingFinished);
-  const secSpentOnTyping = useAppSelector(
-      (state) => state.text.infoAboutText.secondsSinceStartedTyping,
-  );
-  const wordsTyped = useAppSelector(
-      (state) => state.text.infoAboutText.wordsTyped,
-  );
-  const words = useAppSelector((state) => state.text.infoAboutText.words);
-  const correctKeysPressed = useAppSelector(
-      (state) => state.text.correctKeysPressed,
-  );
-  const language = useAppSelector((state) => state.text.infoAboutText.language);
-  const totalKeysPressed = useAppSelector((state) => state.text.totalKeysPressed);
-  const afkDetected = useAppSelector((state) => state.text.afkDetected);
-  const mode = useAppSelector((state) => state.text.mode);
+  const isTypingFinished = useAppSelector(selectTextIsTypingFinished);
+  const secSpentOnTyping = useAppSelector(selectTextSecondsSinceStartedTyping);
+  const wordsTyped = useAppSelector(selectTextWordsTyped);
+  const words = useAppSelector(selectTextWords);
+  const correctKeysPressed = useAppSelector(selectTextCorrectKeysPressed);
+  const language = useAppSelector(selectTextLanguage);
+  const totalKeysPressed = useAppSelector(selectTextTotalKeysPressed);
+  const afkDetected = useAppSelector(selectTextAfkDetected);
+  const mode = useAppSelector(selectTextMode);
 
   const {resetTypingProgress} = useActions();
   const navigate = useNavigate();
