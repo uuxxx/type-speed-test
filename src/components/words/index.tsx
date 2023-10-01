@@ -31,7 +31,7 @@ export function Words() {
       ctrlKey: e.ctrlKey,
     });
 
-    intervalIdRef.current = setTimeout(setAfkDetected, 10_000);
+    intervalIdRef.current = setTimeout(setAfkDetected, 5_000);
   }
 
   useEffect(() => {
@@ -40,6 +40,7 @@ export function Words() {
     }
 
     return () => {
+      clearTimeout(intervalIdRef.current);
       document?.removeEventListener('keydown', handleUserType);
     };
   }, [isAnyModalOpened]);

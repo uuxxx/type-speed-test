@@ -3,7 +3,7 @@ import {createPortal} from 'react-dom';
 import {useAppSelector, useActions} from '@/redux/hooks';
 import {Suggestions} from '@/components/suggestions';
 import {selectIsSelectLangModalOpened} from '@/redux/selectors/modals/selectLangModals';
-import styles from '@styles/selectLangModal.module.scss';
+import styles from '@/styles/selectLangModal.module.scss';
 
 export function SelectLangModal() {
   const isSelectLangModalOpened = useAppSelector(selectIsSelectLangModalOpened);

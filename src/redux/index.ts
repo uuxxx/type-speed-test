@@ -3,8 +3,8 @@ import {
   combineReducers,
   PreloadedState,
 } from '@reduxjs/toolkit';
-import textReducer from '@components/text/redux/textSlice';
-import modalsReducer from '@modals/modalsSlice';
+import textReducer from '@/components/text/redux/textSlice';
+import modalsReducer from '@/modals/modalsSlice';
 
 const rootReducer = combineReducers({
   text: textReducer,

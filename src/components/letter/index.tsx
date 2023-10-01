@@ -1,4 +1,4 @@
-import styles from '@styles/letter.module.scss';
+import styles from '@/styles/letter.module.scss';
 
 export function Letter({pointerPos, type, value}: Letter) {
   const className = `${styles.letter} ${

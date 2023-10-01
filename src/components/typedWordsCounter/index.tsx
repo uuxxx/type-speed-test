@@ -1,6 +1,6 @@
 import {useAppSelector} from '@/redux/hooks';
 import {selectTextLength, selectTextWordsTyped} from '@/redux/selectors/text';
-import styles from '@styles/typedWordsCounter.module.scss';
+import styles from '@/styles/typedWordsCounter.module.scss';
 
 export function TypedWordsCounter() {
   const wordsTyped = useAppSelector(selectTextWordsTyped);

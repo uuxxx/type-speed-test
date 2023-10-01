@@ -6,7 +6,7 @@ import {
   setSelectedModeToLocalStorage,
 } from './utils';
 import {selectTextLanguage, selectTextMode} from '@/redux/selectors/text';
-import styles from '@styles/menu.module.scss';
+import styles from '@/styles/menu.module.scss';
 
 export function Menu() {
   const currentMode = useAppSelector(selectTextMode);

@@ -19,7 +19,7 @@ import {
   selectTextLanguage,
   selectTextMode,
 } from '@/redux/selectors/text';
-import styles from '@styles/text.module.scss';
+import styles from '@/styles/text.module.scss';
 
 export function Text() {
   const {fetchQuotes, resetTypingProgress} = useActions();

@@ -16,5 +16,6 @@ module.exports = {
       {allowConstantExport: true},
     ],
     'require-jsdoc': 'off',
+    'max-len': ['error', {comments: 300, code: 150}],
   },
 };

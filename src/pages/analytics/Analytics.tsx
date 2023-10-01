@@ -14,7 +14,7 @@ import {
   selectTextWords,
   selectTextWordsTyped,
 } from '@/redux/selectors/text';
-import styles from '@styles/analytics.module.scss';
+import styles from '@/styles/analytics.module.scss';
 
 export function Analytics() {
   const isTypingFinished = useAppSelector(selectTextIsTypingFinished);

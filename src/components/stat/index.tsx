@@ -1,4 +1,4 @@
-import styles from '@styles/stat.module.scss';
+import styles from '@/styles/stat.module.scss';
 
 interface StatProps {
   statName: string;

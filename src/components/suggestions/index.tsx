@@ -6,7 +6,7 @@ import {
   selectErrorLoadingListOfLangs,
   selectIsListOfLangsLoading,
 } from '@/redux/selectors/modals/selectLangModals';
-import styles from '@styles/suggestions.module.scss';
+import styles from '@/styles/suggestions.module.scss';
 
 interface SuggestionsProps {
   searchQuery: string;
