@@ -1,7 +1,7 @@
 const LIMIT_OF_INCORRECT_EXTRA_LETTERS = 6;
 
 export class Text {
-  private infoAboutText: InfoAboutText;
+  readonly infoAboutText: InfoAboutText;
 
   constructor(private state: InitialState) {
     this.infoAboutText = this.state.infoAboutText;
@@ -232,11 +232,6 @@ export class Text {
     this.infoAboutText.wordsTyped++;
   }
 
-  isAllWordsBesidesLastWasTyped() {
-    const {length, wordsTyped} = this.infoAboutText;
-    return wordsTyped === length;
-  }
-
   isCurrentWordLast() {
     const {length, currentWordId} = this.infoAboutText;
     return currentWordId === length - 1;
@@ -248,9 +243,7 @@ export class Text {
   }
 
   handlePressingSpaceOnLastWord() {
-    this.currentLetter.pointerPos = 'none';
     this.currentWord.currentLetterId = this.currentWord.length - 1;
-    this.currentLetter.pointerPos = 'after';
     this.currentWord.type = 'incorrect';
     this.state.isTypingFinished = true;
   }
