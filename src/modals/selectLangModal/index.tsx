@@ -19,8 +19,9 @@ export function SelectLangModal() {
           <div
             className={styles.overlay}
             onClick={() => closeSelectLangModal()}
+            data-testid="overlay"
           ></div>
-          <div className={styles.modal}>
+          <div className={styles.modal} data-testid="select-lang-modal">
             <div className={styles.searchBar}>
               <span className={`${styles.searchIcon} material-symbols-outlined`}>
               search
