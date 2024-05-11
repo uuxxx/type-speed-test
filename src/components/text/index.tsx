@@ -1,17 +1,4 @@
-import {useEffect, useRef, useCallback} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {useActions, useAppSelector} from '@/redux/hooks';
-import {TypedWordsCounter} from '../typedWordsCounter';
-import {Spinner} from '../spinner';
-import {SelectLangButton} from '../selectLangButton';
-import {Words} from '../words';
-import {
-  getLastSelectedLangFromLocalStorage,
-  setSelectedLangToLocalStorage,
-} from './redux/utils';
-import {Menu} from '../menu';
-import {Timer} from '../timer';
-import {Button} from '../button';
 import {
   selectTextErrorWhileFetchingQuotes,
   selectTextIsLoading,
@@ -20,6 +7,19 @@ import {
   selectTextMode,
 } from '@/redux/selectors/text';
 import styles from '@/styles/text.module.scss';
+import {useCallback, useEffect, useRef} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Button} from '../button';
+import {Menu} from '../menu';
+import {SelectLangButton} from '../selectLangButton';
+import {Spinner} from '../spinner';
+import {Timer} from '../timer';
+import {TypedWordsCounter} from '../typedWordsCounter';
+import {Words} from '../words';
+import {
+  getLastSelectedLangFromLocalStorage,
+  setSelectedLangToLocalStorage,
+} from './redux/utils';
 
 export function Text() {
   const {fetchQuotes, resetTypingProgress} = useActions();

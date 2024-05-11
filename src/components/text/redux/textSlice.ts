@@ -1,13 +1,13 @@
 import {memoizedDownloadQuotes} from '@/firebase/quotes/fetch_quotes';
-import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
+import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {Text} from './Text';
 import {
   getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage,
   isBackspace,
-  isSpecialKey,
   isSpace,
+  isSpecialKey,
   serialize,
 } from './utils';
-import {Text} from './Text';
 
 const initialState = {
   isLoading: false,

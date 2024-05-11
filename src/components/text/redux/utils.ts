@@ -4,9 +4,9 @@ import {
   CAPSLOCK,
   CTRL,
   LAST_SELECTED_LANG,
+  QUOTES,
   SHIFT,
   TAB,
-  QUOTES,
 } from '@/constants';
 
 export function getIndexOfNextQuoteAndSaveItAsLatestTypedInLocalStorage(

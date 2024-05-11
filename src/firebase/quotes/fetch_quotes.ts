@@ -1,4 +1,3 @@
-import app from '../config';
 import {
   getDownloadURL,
   getStorage,
@@ -6,8 +5,8 @@ import {
   ref,
   StorageReference,
 } from 'firebase/storage';
-
 import localforage from 'localforage';
+import app from '../config';
 import {Quotes} from './types';
 
 const storage = getStorage(app, 'gs://type-speed-test-v2.appspot.com');

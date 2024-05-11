@@ -1,8 +1,8 @@
-import {forwardRef} from 'react';
 import {useAppSelector} from '@/redux/hooks';
-import {Letter} from '../letter';
 import {selectTextWordById} from '@/redux/selectors/text';
 import styles from '@/styles/word.module.scss';
+import {forwardRef} from 'react';
+import {Letter} from '../letter';
 
 interface WordProps {
   id: number;

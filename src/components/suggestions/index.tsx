@@ -1,12 +1,12 @@
-import {useEffect, memo} from 'react';
-import {useAppSelector, useActions} from '@/redux/hooks';
-import {Spinner} from '../spinner';
+import {useActions, useAppSelector} from '@/redux/hooks';
 import {
   selectAvailableLangs,
   selectErrorLoadingListOfLangs,
   selectIsListOfLangsLoading,
 } from '@/redux/selectors/modals/selectLangModals';
 import styles from '@/styles/suggestions.module.scss';
+import {memo, useEffect} from 'react';
+import {Spinner} from '../spinner';
 
 interface SuggestionsProps {
   searchQuery: string;

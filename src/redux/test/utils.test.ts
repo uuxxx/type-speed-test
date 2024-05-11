@@ -1,5 +1,5 @@
-import {getReduxStateBoilerplate} from './utils';
 import {serialize} from '@/components/text/redux/utils';
+import {getReduxStateBoilerplate} from './utils';
 
 describe('getReduxStateBoilerplate', () => {
   it('empty changes obj', () => {
