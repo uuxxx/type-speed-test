@@ -1,6 +1,4 @@
-import {useRef, useEffect} from 'react';
-import {useAppSelector, useActions} from '@/redux/hooks';
-import {Word} from '../word';
+import {useActions, useAppSelector} from '@/redux/hooks';
 import {selectModalsIsAnyModalOpened} from '@/redux/selectors/modals/modals';
 import {
   selectTextCurrentWordId,
@@ -8,6 +6,8 @@ import {
   selectTextIsTypingStarted,
   selectTextWords,
 } from '@/redux/selectors/text';
+import {useEffect, useRef} from 'react';
+import {Word} from '../word';
 
 export function Words() {
   const {incrementTimerBy1Sec, onKeyDown, setAfkDetected} = useActions();

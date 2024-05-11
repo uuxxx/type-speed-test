@@ -1,5 +1,5 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {fetchListOfAllAvailableQuotes} from '@/firebase/quotes/fetch_quotes';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {InitialState, Modal} from './types';
 
 const initialState = {

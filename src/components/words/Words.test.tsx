@@ -1,10 +1,10 @@
+import {LIST_OF_CONTROL_KEYS} from '@/constants';
 import {
   getReduxStateBoilerplate,
   renderWithReduxProvider,
 } from '@/redux/test/utils';
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {LIST_OF_CONTROL_KEYS} from '@/constants';
 import {Words} from '.';
 import {serialize} from '../text/redux/utils';
 

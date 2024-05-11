@@ -1,6 +1,6 @@
-import {useEffect} from 'react';
-import {useAppSelector, useActions} from '@/redux/hooks';
+import {useActions, useAppSelector} from '@/redux/hooks';
 import {selectTextSecondsSinceStartedTyping} from '@/redux/selectors/text';
+import {useEffect} from 'react';
 
 const SECONDS_TO_TYPE = 15;
 

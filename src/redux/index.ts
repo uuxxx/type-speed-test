@@ -1,10 +1,10 @@
-import {
-  configureStore,
-  combineReducers,
-  PreloadedState,
-} from '@reduxjs/toolkit';
 import textReducer from '@/components/text/redux/textSlice';
 import modalsReducer from '@/modals/modalsSlice';
+import {
+  PreloadedState,
+  combineReducers,
+  configureStore,
+} from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
   text: textReducer,

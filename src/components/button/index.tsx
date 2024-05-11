@@ -1,5 +1,5 @@
-import {MouseEventHandler, ReactElement} from 'react';
 import styles from '@/styles/button.module.scss';
+import {MouseEventHandler, ReactElement} from 'react';
 
 interface ButtonProps {
   style?: Record<string, string | number>;

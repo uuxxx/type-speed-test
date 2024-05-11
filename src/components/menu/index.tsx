@@ -1,12 +1,12 @@
+import {useActions, useAppSelector} from '@/redux/hooks';
+import {selectTextLanguage, selectTextMode} from '@/redux/selectors/text';
+import styles from '@/styles/menu.module.scss';
 import {useEffect} from 'react';
-import {useAppSelector, useActions} from '@/redux/hooks';
 import {Button} from '../button';
 import {
   getLastSelectedModeFromLocalStorage,
   setSelectedModeToLocalStorage,
 } from './utils';
-import {selectTextLanguage, selectTextMode} from '@/redux/selectors/text';
-import styles from '@/styles/menu.module.scss';
 
 export function Menu() {
   const currentMode = useAppSelector(selectTextMode);

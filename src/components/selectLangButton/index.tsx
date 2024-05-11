@@ -1,7 +1,7 @@
-import {useAppSelector, useActions} from '@/redux/hooks';
-import {Button} from '../button';
+import {useActions, useAppSelector} from '@/redux/hooks';
 import {selectTextLanguage} from '@/redux/selectors/text';
 import styles from '@/styles/selectLangButton.module.scss';
+import {Button} from '../button';
 
 export function SelectLangButton() {
   const {openSelectLangModal} = useActions();

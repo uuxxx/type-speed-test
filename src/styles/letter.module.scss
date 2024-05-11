@@ -5,14 +5,14 @@
   font-weight: 500;
   line-height: 1em;
   position: relative;
-  transition: color .3s;
+  transition: color 0.3s;
 
   &:before {
     content: '';
     position: absolute;
     width: 2px;
     background: gray;
-    transition: opacity .1s;
+    transition: opacity 0.1s;
   }
 }
 
@@ -51,4 +51,3 @@
     right: 0;
   }
 }
-

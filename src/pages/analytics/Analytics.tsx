@@ -1,8 +1,6 @@
-import {Stat} from '@/components/stat';
-import {useAppSelector, useActions} from '@/redux/hooks';
-import {StatsCalculator} from './StatsCalculator';
-import {Navigate, useNavigate} from 'react-router-dom';
 import {Button} from '@/components/button';
+import {Stat} from '@/components/stat';
+import {useActions, useAppSelector} from '@/redux/hooks';
 import {
   selectTextAfkDetected,
   selectTextCorrectKeysPressed,
@@ -15,6 +13,8 @@ import {
   selectTextWordsTyped,
 } from '@/redux/selectors/text';
 import styles from '@/styles/analytics.module.scss';
+import {Navigate, useNavigate} from 'react-router-dom';
+import {StatsCalculator} from './StatsCalculator';
 
 export function Analytics() {
   const isTypingFinished = useAppSelector(selectTextIsTypingFinished);

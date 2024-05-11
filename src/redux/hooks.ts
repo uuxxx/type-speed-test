@@ -1,12 +1,14 @@
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {bindActionCreators} from '@reduxjs/toolkit';
 import {
   fetchQuotes,
   actions as textActions,
 } from '@/components/text/redux/textSlice';
-import {actions as modalsActions} from '@/modals/modalsSlice';
-import {fetchListOfQuotes} from '@/modals/modalsSlice';
-import {RootState, AppDispatch} from '.';
+import {
+  fetchListOfQuotes,
+  actions as modalsActions,
+} from '@/modals/modalsSlice';
+import {bindActionCreators} from '@reduxjs/toolkit';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '.';
 
 type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
