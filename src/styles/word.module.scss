@@ -1,5 +1,3 @@
-@import './vars.scss';
-
 .word {
   margin: 5px;
   position: relative;
@@ -9,10 +7,10 @@
   &:after {
     content: '';
     height: 2px;
-    background: $incorrect-extra-color;
+    background: var(--incorrect-extra-color);
     position: absolute;
     bottom: -2px;
     left: 0;
-    right: 0;    
-  } 
+    right: 0;
+  }
 }

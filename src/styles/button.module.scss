@@ -1,7 +1,5 @@
-@import './vars.scss';
-
 .button {
-  color: $dark-theme-main-color;
+  color: var(--dark-theme-main-color);
   background: transparent;
   display: flex;
   justify-content: center;

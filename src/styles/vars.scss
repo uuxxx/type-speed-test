@@ -1,5 +1,7 @@
-$incorrect-color: #f52443;
-$incorrect-extra-color: #640b2c;
+:root {
+  --incorrect-color: #f52443;
+  --incorrect-extra-color: #640b2c;
 
-$dark-theme-bg-color: #3b363f;
-$dark-theme-main-color: #fc6e83;
+  --dark-theme-bg-color: #3b363f;
+  --dark-theme-main-color: #fc6e83;
+}
