@@ -7,6 +7,8 @@ import {
   getLastSelectedModeFromLocalStorage,
   setSelectedModeToLocalStorage,
 } from './utils';
+import TimerIcon from '@/assets/icons/timer.svg?react';
+import TitleIcon from '@/assets/icons/title.svg?react';
 
 export function Menu() {
   const currentMode = useAppSelector(selectTextMode);
@@ -33,16 +35,20 @@ export function Menu() {
     <div className={styles.container}>
       <Button
         onClick={() => clickHandler('time')}
-        highlighted={currentMode === 'time'}
+        className={`${styles.btn} ${
+          currentMode === 'time' && styles.highlighted
+        }`}
       >
-        <span className="material-symbols-outlined">timer</span>
+        <TimerIcon className={styles.icon} />
         <span>time</span>
       </Button>
       <Button
         onClick={() => clickHandler('words')}
-        highlighted={currentMode === 'words'}
+        className={`${styles.btn} ${
+          currentMode === 'words' && styles.highlighted
+        }`}
       >
-        <span className="material-symbols-outlined">title</span>
+        <TitleIcon className={styles.icon} />
         <span>words</span>
       </Button>
     </div>

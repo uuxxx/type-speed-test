@@ -1,3 +1,8 @@
+.icon {
+  transition: fill 0.1s;
+  fill: var(--dark-theme-main-color);
+}
+
 .button {
   display: flex;
   align-items: center;
@@ -9,5 +14,9 @@
 
   &:hover {
     color: #000;
+
+    .icon {
+      fill: #000;
+    }
   }
 }

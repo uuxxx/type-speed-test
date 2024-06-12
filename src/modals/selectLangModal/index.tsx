@@ -2,6 +2,7 @@ import {Suggestions} from '@/components/suggestions';
 import {useActions, useAppSelector} from '@/redux/hooks';
 import {selectIsSelectLangModalOpened} from '@/redux/selectors/modals/selectLangModals';
 import styles from '@/styles/selectLangModal.module.scss';
+import SearhIcon from '@/assets/icons/search.svg?react';
 import {useDeferredValue, useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -23,9 +24,7 @@ export function SelectLangModal() {
           ></div>
           <div className={styles.modal} data-testid="select-lang-modal">
             <div className={styles.searchBar}>
-              <span className={`${styles.searchIcon} material-symbols-outlined`}>
-              search
-              </span>
+              <SearhIcon className={styles.searchIcon} />
               <input
                 className={styles.searchInput}
                 type="text"

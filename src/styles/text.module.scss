@@ -28,3 +28,16 @@
   z-index: -1000;
   opacity: 0;
 }
+
+.icon {
+  fill: var(--dark-theme-main-color);
+  transition: fill 0.2s;
+}
+
+.replay-btn {
+  &:hover {
+    .icon {
+      fill: #000;
+    }
+  }
+}

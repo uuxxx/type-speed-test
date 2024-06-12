@@ -2,6 +2,7 @@ import {useActions, useAppSelector} from '@/redux/hooks';
 import {selectTextLanguage} from '@/redux/selectors/text';
 import styles from '@/styles/selectLangButton.module.scss';
 import {Button} from '../button';
+import LanguageIcon from '@/assets/icons/language.svg?react';
 
 export function SelectLangButton() {
   const {openSelectLangModal} = useActions();
@@ -9,7 +10,7 @@ export function SelectLangButton() {
 
   return (
     <Button className={styles.button} onClick={() => openSelectLangModal()}>
-      <span className={'material-symbols-outlined'}>language</span>
+      <LanguageIcon className={styles.icon} />
       <span>{language || 'loading...'}</span>
     </Button>
   );

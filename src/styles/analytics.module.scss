@@ -24,6 +24,19 @@
   }
 }
 
-.icon {
-  font-size: 40px;
+.undoBtn {
+  margin: 20px;
+
+  &:hover {
+    .undoIcon {
+      fill: #000;
+    }
+  }
+}
+
+.undoIcon {
+  width: 40px;
+  height: 40px;
+  fill: var(--dark-theme-main-color);
+  transition: fill 0.2s;
 }

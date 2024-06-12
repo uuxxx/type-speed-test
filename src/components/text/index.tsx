@@ -7,6 +7,7 @@ import {
   selectTextMode,
 } from '@/redux/selectors/text';
 import styles from '@/styles/text.module.scss';
+import ReplayIcon from '@/assets/icons/replay.svg?react';
 import {useCallback, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button} from '../button';
@@ -101,8 +102,8 @@ export function Text() {
       <div ref={textContainerRef} className={styles.textContainer}>
         <Words />
       </div>
-      <Button onClick={replayClickHandler}>
-        <span className="material-symbols-outlined">replay</span>
+      <Button className={styles['replay-btn']} onClick={replayClickHandler}>
+        <ReplayIcon className={styles.icon} />
       </Button>
     </div>
   );

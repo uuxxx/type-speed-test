@@ -1,3 +1,25 @@
 .container {
   display: flex;
 }
+
+.icon {
+  fill: var(--dark-theme-main-color);
+  transition: fill 0.2s;
+}
+
+.btn {
+  &.highlighted {
+    background: var(--dark-theme-main-color);
+    color: var(--dark-theme-bg-color);
+
+    .icon {
+      fill: var(--dark-theme-bg-color);
+    }
+  }
+
+  &:hover {
+    .icon {
+      fill: #000;
+    }
+  }
+}

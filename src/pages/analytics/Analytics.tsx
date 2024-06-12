@@ -13,6 +13,7 @@ import {
   selectTextWordsTyped,
 } from '@/redux/selectors/text';
 import styles from '@/styles/analytics.module.scss';
+import UndoIcon from '@/assets/icons/undo.svg?react';
 import {Navigate, useNavigate} from 'react-router-dom';
 import {StatsCalculator} from './StatsCalculator';
 
@@ -49,8 +50,8 @@ export function Analytics() {
 
   return (
     <>
-      <Button style={{margin: '20px'}} onClick={backToMainPage}>
-        <span className={`${styles.icon} material-symbols-outlined`}>undo</span>
+      <Button className={styles.undoBtn} onClick={backToMainPage}>
+        <UndoIcon className={styles.undoIcon} />
       </Button>
       <div className={styles.container}>
         <Stat statName="wpm" statValue={stats.wpm} />
